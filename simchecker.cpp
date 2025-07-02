@@ -10,13 +10,16 @@ public:
 	int checkLength(string str1, string str2) {
 		int longer = std::max(str1.length(), str2.length());
 		int shorter = std::min(str1.length(), str2.length());
-		// Same length, get max score
-		if (longer == shorter)
-			return MAX_SCORE_LENGTH;
 
+		if (isSameLength(longer, shorter))
+			return MAX_SCORE_LENGTH;
 		return getScore(longer, shorter);
 	}
 private:
+	bool isSameLength(int len1, int len2) {
+		return len1 == len2;
+	}
+
 	double getScore(int longer, int shorter) {
 		int gap = longer - shorter;
 		double score = 60 * (1 - static_cast<double>(gap) / shorter);

@@ -1,28 +1,31 @@
 #include "gmock/gmock.h"
 #include "simchecker.cpp"
 
-TEST(Simchecker, sameLengthTest) {
+using namespace testing;
+class LengthFixture : public testing::Test {
+public:
 	SimChecker sc;
-	int score = sc.checkLength("asd", "dsa");
-	EXPECT_EQ(60, score);
+	void check(int expected, string str1, string str2) {
+		SimChecker sc;
+		int score = sc.checkLength(str1, str2);
+		EXPECT_EQ(expected, score);
+	}
+};
+
+TEST_F(LengthFixture, sameLengthTest) {
+	check(60, "asd", "dsa");
 }
 
-TEST(Simchecker, zeroScoreTest) {
-	SimChecker sc;
-	int score = sc.checkLength("a", "bb");
-	EXPECT_EQ(0, score);
+TEST_F(LengthFixture, zeroScoreTest) {
+	check(0, "a", "bb");
 }
 
-TEST(Simchecker, subScoreTest1) {
-	SimChecker sc;
-	int score = sc.checkLength("aaabb", "baa");
-	EXPECT_EQ(20, score);
+TEST_F(LengthFixture, subScoreTest1) {
+	check(20, "aaabb", "baa");
 }
 
-TEST(Simchecker, subScoreTest2) {
-	SimChecker sc;
-	int score = sc.checkLength("aae", "aa");
-	EXPECT_EQ(30, score);
+TEST_F(LengthFixture, subScoreTest2) {
+	check(30, "aae", "aa");
 }
 
 int main() {
