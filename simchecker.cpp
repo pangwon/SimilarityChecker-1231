@@ -4,7 +4,8 @@ using std::string;
 
 class SimChecker {
 public:
-
+	bool usedStr1[26] = { false };
+	bool usedStr2[26] = { false };
 	const int MAX_SCORE_LENGTH = 60;
 	const int NUM_ALPHA = 26;
 
@@ -18,24 +19,13 @@ public:
 	}
 
 	int checkAlpha(string str1, string str2) {
-		bool usedStr1[26] = { false };
-		bool usedStr2[26] = { false };
 		int samecnt = 0;
 		int totalcnt = 0;
 		int str1cnt = 0;
 		int str2cnt = 0;
-		for (int i = 0; i < str1.length(); i++) {
-			if (usedStr1[str1[i] - 'A'] == false) {
-				usedStr1[str1[i] - 'A'] = true;
-				str1cnt++;
-			}
-		}
-		for (int i = 0; i < str2.length(); i++) {
-			if (usedStr2[str2[i] - 'A'] == false) {
-				usedStr2[str2[i] - 'A'] = true;
-				str2cnt++;
-			}
-		}
+
+		markUsedChars(str1, str1cnt, usedStr1);
+		markUsedChars(str2, str2cnt, usedStr2);
 
 		for (int i = 0; i < NUM_ALPHA; i++) {
 			if (usedStr1[i] && usedStr2[i])
@@ -46,6 +36,16 @@ public:
 		double score = 40 * (static_cast<double>(samecnt) / totalcnt);
 
 		return score;
+	}
+
+	void markUsedChars(std::string& str, int& strcnt, bool arr[])
+	{
+		for (int i = 0; i < str.length(); i++) {
+			if (arr[str[i] - 'A'] == false) {
+				arr[str[i] - 'A'] = true;
+				strcnt++;
+			}
+		}
 	}
 
 private:
