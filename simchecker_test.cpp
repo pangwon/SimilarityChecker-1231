@@ -2,30 +2,39 @@
 #include "simchecker.cpp"
 
 using namespace testing;
-class LengthFixture : public testing::Test {
+class SimcheckerFixture : public testing::Test {
 public:
 	SimChecker sc;
-	void check(int expected, string str1, string str2) {
+	void checklen(int expected, string str1, string str2) {
 		SimChecker sc;
 		int score = sc.checkLength(str1, str2);
 		EXPECT_EQ(expected, score);
 	}
+	void checkalpha(int expected, string str1, string str2) {
+		SimChecker sc;
+		int score = sc.checkAlpha(str1, str2);
+		EXPECT_EQ(expected, score);
+	}
 };
 
-TEST_F(LengthFixture, sameLengthTest) {
-	check(60, "asd", "dsa");
+TEST_F(SimcheckerFixture, sameLengthTest) {
+	checklen(60, "asd", "dsa");
 }
 
-TEST_F(LengthFixture, zeroScoreTest) {
-	check(0, "a", "bb");
+TEST_F(SimcheckerFixture, zeroScoreTest) {
+	checklen(0, "a", "bb");
 }
 
-TEST_F(LengthFixture, subScoreTest1) {
-	check(20, "aaabb", "baa");
+TEST_F(SimcheckerFixture, subScoreTest1) {
+	checklen(20, "aaabb", "baa");
 }
 
-TEST_F(LengthFixture, subScoreTest2) {
-	check(30, "aae", "aa");
+TEST_F(SimcheckerFixture, subScoreTest2) {
+	checklen(30, "aae", "aa");
+}
+
+TEST_F(SimcheckerFixture, sameAlphaTest) {
+	checkalpha(40, "ASD", "DSA");
 }
 
 int main() {
