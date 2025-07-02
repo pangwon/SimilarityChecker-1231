@@ -2,7 +2,9 @@
 #include "simchecker.cpp"
 
 TEST(Simchecker, tc1) {
-	EXPECT_EQ(1, 1);
+	SimChecker sc;
+	int score = sc.checkLength("asd", "dsa");
+	EXPECT_EQ(60, score);
 }
 
 int main() {
